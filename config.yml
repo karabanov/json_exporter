@@ -1,0 +1,12 @@
+---
+metrics:
+- name: example_metrics
+  path: "{ .counter }"
+  help: Example metrics 
+  labels:
+    environment: example
+
+body:
+  content: |
+    {"time_diff": "1m35s","anotherVar": "{{ .myVal | first }}"}
+  templatize: true

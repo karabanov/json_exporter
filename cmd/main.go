@@ -21,8 +21,8 @@ import (
 
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
-	"github.com/prometheus-community/json_exporter/config"
-	"github.com/prometheus-community/json_exporter/exporter"
+	"github.com/karabanov/json_exporter/config"
+	"github.com/karabanov/json_exporter/exporter"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/prometheus/common/promlog"
@@ -102,7 +102,7 @@ func probeHandler(w http.ResponseWriter, r *http.Request, logger log.Logger, con
 		return
 	}
 
-	data, err := exporter.FetchJson(ctx, logger, target, config)
+	data, err := exporter.FetchJson(ctx, logger, target, config, r.URL.Query())
 	if err != nil {
 		http.Error(w, "Failed to fetch JSON response. TARGET: "+target+", ERROR: "+err.Error(), http.StatusServiceUnavailable)
 		return
@@ -115,3 +115,5 @@ func probeHandler(w http.ResponseWriter, r *http.Request, logger log.Logger, con
 	h.ServeHTTP(w, r)
 
 }
+
+
